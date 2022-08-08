@@ -1,5 +1,11 @@
 # a9视频提取速度-时间
 
+## 运行
+
+```bash
+python .\videoSplit.py ./test.mp4
+```
+
 ## 参考文档
 
 [python将视频分解为图片+将图片合成为视频](https://blog.csdn.net/qq_45365214/article/details/123873991)
