@@ -22,7 +22,7 @@ def video2frame(videos_path, frames_save_path):
     success, image = vidcap.read()
     count = 0
     now = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
-    f = open(sys.argv[1]+now+".csv", 'w', encoding='utf-8')
+    f = open(sys.argv[1]+now+".no-h.csv", 'w', encoding='utf-8')
     fstr = ''
     while success:
         success, image = vidcap.read()
@@ -35,15 +35,9 @@ def video2frame(videos_path, frames_save_path):
         image_time = image[145:196, 1645:1887]
         image_both = image[26:196, 1645:1887]
 
-        # 阈值处理
-        ret, image_speed_t = cv2.threshold(
-            cv2.cvtColor(image_speed, cv2.COLOR_BGR2GRAY), 225, 255, cv2.THRESH_BINARY)
-        ret, image_time_t = cv2.threshold(
-            cv2.cvtColor(image_time, cv2.COLOR_BGR2GRAY), 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-
-        str_speed = pytesseract.image_to_string(image_speed_t).strip()
+        str_speed = pytesseract.image_to_string(image_speed).strip()
         str_time = pytesseract.image_to_string(
-            image_time_t).replace('00:', '').strip()
+            image_time).replace('00:', '').strip()
         fstr += str_speed+', '+str_time+'\n'
         # cv2.imencode('.jpg', image_speed)[1].tofile(frames_save_path + "/frame%d_speed.jpg" % count)
         # cv2.imencode('.jpg', image_time)[1].tofile(frames_save_path + "/frame%d_time.jpg" % count)
